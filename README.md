@@ -1,4 +1,4 @@
-# Grunt radio mobile app
+# Lego Collection app
 ## ⚙️ Configuration
 - Create file .env.local with your API key for rebrickable ex:
 ```bash
@@ -23,7 +23,7 @@ $ npx react-native run-ios # run on ios
 
 - Write Better Test
 - Display number of parts to Collection Page
-- Improve UI 
+- Improve UI
 - Add user Authentification
 - Add Colour filter for Parts Page
 - Add complete or incomplete filter for Parts Page
