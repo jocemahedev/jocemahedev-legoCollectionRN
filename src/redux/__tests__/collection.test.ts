@@ -1,4 +1,4 @@
-import {Set} from '../../types/types';
+import {Part, Set} from '../../types/types';
 import {fetchSets} from '../../services/FakeApi';
 import reducer, {
   initialState,
@@ -7,6 +7,7 @@ import reducer, {
   deleteSetToCollection,
   selectCompletedSets,
   selectAllSets,
+  setCurrentSets,
 } from '../collection';
 import {RootState} from '..';
 
@@ -39,6 +40,7 @@ const COLLECTION_ALL_SETS_COMPLETED_STATE = {
         idParts: '5',
       },
     ],
+    currentSetIndex: undefined,
   },
 };
 const COLLECTION_ALL_SETS_NOT_COMPLETED_STATE = {
@@ -69,6 +71,7 @@ const COLLECTION_ALL_SETS_NOT_COMPLETED_STATE = {
         idParts: '5',
       },
     ],
+    currentSetIndex: undefined,
   },
 };
 const COLLECTION_HALF_SETS_COMPLETED_STATE = {
@@ -99,6 +102,7 @@ const COLLECTION_HALF_SETS_COMPLETED_STATE = {
         idParts: '5',
       },
     ],
+    currentSetIndex: undefined,
   },
 };
 test('should return the initial state', () => {
@@ -121,9 +125,15 @@ test('should update current Collection with sets Collection', () => {
   const expectedState = {
     currentCollection: newCollection,
     allSets: newSets,
+    currentSetIndex: undefined,
   };
   const action = setCurrentCollection(newCollection);
-  expect(reducer(previousState.collection, action)).toEqual(expectedState);
+  const setCurrentCollectionreducer = reducer(previousState.collection, action);
+  const actionSetCurrentSets = setCurrentSets(newSets);
+
+  expect(reducer(setCurrentCollectionreducer, actionSetCurrentSets)).toEqual(
+    expectedState,
+  );
 });
 
 test('Given Collection not empty When add set Then Collection has 1 more set', () => {
@@ -136,6 +146,7 @@ test('Given Collection not empty When add set Then Collection has 1 more set', (
   const previousState = {
     currentCollection: currentCollection,
     allSets: allSets,
+    currentSetIndex: undefined,
   };
 
   const addedSet: Set = {
@@ -147,6 +158,7 @@ test('Given Collection not empty When add set Then Collection has 1 more set', (
     quantityParts: 399,
     quantityCollectorParts: 0,
     idParts: '789789',
+    idLego: '31120-1',
   };
 
   const newSets: Set[] = [...allSets, addedSet];
@@ -154,10 +166,12 @@ test('Given Collection not empty When add set Then Collection has 1 more set', (
   const expectedState = {
     currentCollection: currentCollection,
     allSets: newSets,
+    currentSetIndex: undefined,
   };
   const notExpectedState = {
     currentCollection: currentCollection,
     allSets: allSets,
+    currentSetIndex: undefined,
   };
 
   const action = addSetToCollection(addedSet);
@@ -173,11 +187,13 @@ test('Given Collection empty When delete set Then do nothing', () => {
   const previousState = {
     currentCollection: currentCollection,
     allSets: [],
+    currentSetIndex: undefined,
   };
 
   const expectedState = {
     currentCollection: currentCollection,
     allSets: [],
+    currentSetIndex: undefined,
   };
   const action = deleteSetToCollection('1');
   expect(reducer(previousState, action)).toEqual(expectedState);
@@ -200,15 +216,18 @@ test('Given Collection has one set When delete set Then Collection is empty', ()
         quantityParts: 99,
         quantityCollectorParts: 99,
         idParts: '4',
+        idLego: '31122-1',
       },
     ],
+    currentSetIndex: undefined,
   };
 
   const expectedState = {
     currentCollection: currentCollection,
     allSets: [],
+    currentSetIndex: undefined,
   };
-  const action = deleteSetToCollection('4');
+  const action = deleteSetToCollection('31122-1');
   expect(reducer(previousState, action)).toEqual(expectedState);
 });
 test('Given no currentCollection  When select all completed set Then completedSets is empty', () => {

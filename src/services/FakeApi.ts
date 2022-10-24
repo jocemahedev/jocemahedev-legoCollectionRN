@@ -22,7 +22,7 @@ export const fetchSets = (collection: Collection): Set[] => {
   });
 };
 
-/*export const fetchParts = (set: Set): Part[] => {
+export const fetchParts = (set: Set): Part[] => {
   const id: string = set.idParts as keyof Part;
   return (jsonParts as any)[id].map((item: Part) => {
     const part: Part = {
@@ -40,4 +40,4 @@ export const fetchSets = (collection: Collection): Set[] => {
 
     return part;
   });
-};*/
+};
