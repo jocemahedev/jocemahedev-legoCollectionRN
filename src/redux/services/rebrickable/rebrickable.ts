@@ -2,7 +2,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {RebrickablePart, RebrickableSet} from './type';
 import {addParts, setAllParts} from '../../set';
-const key = 'd257b01ffb01b4f4a205a41bcf8614cb';
+import {REBRICKABLE_API_KEY} from '@env';
+const key = REBRICKABLE_API_KEY;
+
 // Define a service using a base URL and expected endpoints
 export const rebrickableApi = createApi({
   reducerPath: 'rebrickableApi',
