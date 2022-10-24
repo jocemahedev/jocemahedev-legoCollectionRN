@@ -53,7 +53,7 @@ export const fetchSets = createAsyncThunk<void, void>(
 );
 export const updateQuantitySet = createAsyncThunk<void, number>(
   'collection/updateQuantitySet',
-  async (quantity, {getState, dispatch}) => {
+  async (quantity, {getState}) => {
     console.log('updateQuantitySet');
     const rootState = getState() as RootState;
     const idSets = rootState.collection.currentCollection?.idSets;
@@ -87,6 +87,12 @@ const collectionSlice = createSlice({
         item => item.id === payloadSet.id,
       );
       console.log(state.currentSetIndex);
+    },
+    updateQuantityCurrentSet: (state, action: PayloadAction<number>) => {
+      const currentIndex = state.currentSetIndex;
+      if (currentIndex !== undefined) {
+        state.allSets[currentIndex].quantityCollectorParts = action.payload;
+      }
     },
     addSetToCollection(state, action: PayloadAction<Set>) {
       state.allSets = [...state.allSets, action.payload];
@@ -167,6 +173,7 @@ export const {
   setCurrentCollection,
   setCurrentSets,
   setCurrentIndexSet,
+  updateQuantityCurrentSet,
   addSetToCollection,
   deleteSetToCollection,
 } = collectionSlice.actions;

@@ -87,7 +87,7 @@ export const fetchParts = createAsyncThunk<void, void>(
 );
 export const incrementPart = createAsyncThunk<boolean, Part>(
   'set/incrementPart',
-  async (part, {getState, dispatch}) => {
+  async (part, {getState}) => {
     const rootState = getState() as RootState;
     const currentSet = selectCurrentSet(rootState);
     const indexPart = part.index;
@@ -99,7 +99,6 @@ export const incrementPart = createAsyncThunk<boolean, Part>(
           '/parts/' + currentSet?.idParts + '/' + indexPart,
         );
         await updatePart(dbRef, newQuantity);
-        updateQuantitySet(currentSet.quantityCollectorParts + 1);
         return true;
       }
     }
@@ -108,7 +107,7 @@ export const incrementPart = createAsyncThunk<boolean, Part>(
 );
 export const decrementPart = createAsyncThunk<void, Part>(
   'set/decrementPart',
-  async (part, {getState, dispatch}) => {
+  async (part, {getState}) => {
     const rootState = getState() as RootState;
     const currentSet = selectCurrentSet(rootState);
     const indexPart = part.index;
@@ -120,7 +119,6 @@ export const decrementPart = createAsyncThunk<void, Part>(
           '/parts/' + currentSet?.idParts + '/' + indexPart,
         );
         await updatePart(dbRef, newQuantity);
-        updateQuantitySet(currentSet.quantityCollectorParts - 1);
       }
     }
   },

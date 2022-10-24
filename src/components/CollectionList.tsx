@@ -46,6 +46,11 @@ function Item({set, onPress}: ItemProps) {
         title={set.name}
         leading={<Avatar image={{uri: set.imageUrl}} />}
         trailing={<Text onPress={() => deleteSetHandler(set)}>Delete</Text>}
+        secondaryText={
+          <Text>
+            {set.quantityCollectorParts}/{set.quantityParts}
+          </Text>
+        }
       />
     </View>
   );

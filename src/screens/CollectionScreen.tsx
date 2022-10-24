@@ -10,7 +10,6 @@ import {Set, CollectionListScreenProps} from '../types/types';
 
 export default function ({navigation}: CollectionListScreenProps) {
   const dispatch = useReduxDispatch();
-
   const onPressSet = (set: Set) => {
     dispatch(setCurrentIndexSet(set));
     navigation.navigate('PartsScreen');
