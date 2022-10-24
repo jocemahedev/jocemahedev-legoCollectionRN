@@ -1,0 +1,85 @@
+{
+  "12345": [
+    {
+      "idCollection": "1",
+      "id": "31120-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31120-1/87267.jpg",
+      "name": "Medieval Castle",
+      "isCompleted": false,
+      "quantityParts": 399,
+      "quantityCollectorParts": 0,
+      "idParts": "6"
+    },
+    {
+      "idCollection": "1",
+      "id": "31122-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31122-1/86958.jpg",
+      "name": "Fish Tank",
+      "isCompleted": false,
+      "quantityParts": 99,
+      "quantityCollectorParts": 0,
+      "idParts": "7"
+    },
+    {
+      "idCollection": "1",
+      "id": "31123-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31121-1/86972.jpg",
+      "name": "Crocodile",
+      "isCompleted": false,
+      "quantityParts": 199,
+      "quantityCollectorParts": 0,
+      "idParts": "8"
+    }
+  ],
+  "azerty": [
+    {
+      "idCollection": "2",
+      "id": "31120-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31120-1/87267.jpg",
+      "name": "Medieval Castle",
+      "isCompleted": true,
+      "quantityParts": 399,
+      "quantityCollectorParts": 399,
+      "idParts": "completed"
+    },
+    {
+      "idCollection": "2",
+      "id": "31122-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31122-1/86958.jpg",
+      "name": "Fish Tank",
+      "isCompleted": true,
+      "quantityParts": 99,
+      "quantityCollectorParts": 99,
+      "idParts": "completed"
+    },
+    {
+      "idCollection": "2",
+      "id": "31122-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31121-1/86972.jpg",
+      "name": "Crocodile",
+      "isCompleted": false,
+      "quantityParts": 199,
+      "quantityCollectorParts": 0
+    }
+  ],
+  "blabla": [
+    {
+      "idCollection": "3",
+      "id": "31122-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31122-1/86958.jpg",
+      "name": "Fish Tank",
+      "isCompleted": true,
+      "quantityParts": 99,
+      "quantityCollectorParts": 99
+    },
+    {
+      "idCollection": "3",
+      "id": "31122-1",
+      "imageUrl": "https://cdn.rebrickable.com/media/sets/31121-1/86972.jpg",
+      "name": "Crocodile",
+      "isCompleted": false,
+      "quantityParts": 199,
+      "quantityCollectorParts": 0
+    }
+  ]
+}
