@@ -1,10 +1,11 @@
 import {getDatabase} from 'firebase/database';
 import {initializeApp} from 'firebase/app';
+import {FIREBASE_API_KEY, FIREBASE_DOMAIN, FIREBASE_URL} from '@env';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBUi6oGis0AcYJJI0gKkNrdOdKC63W7cLQ',
-  authDomain: 'my-lego-app-46277.firebaseapp.com',
-  databaseURL: 'https://my-lego-app-46277-default-rtdb.firebaseio.com',
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_DOMAIN,
+  databaseURL: FIREBASE_URL,
   projectId: 'my-lego-app-46277',
   storageBucket: 'my-lego-app-46277.appspot.com',
   messagingSenderId: '674439152761',
