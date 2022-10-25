@@ -7,6 +7,7 @@ import {
   selectAllSets,
   selectCurrentCollection,
   deleteSet,
+  deleteParts,
 } from '../redux/collection';
 
 import {Set} from '../types/types';
@@ -37,6 +38,7 @@ function Item({set, onPress}: ItemProps) {
   const dispatch = useReduxDispatch();
   const deleteSetHandler = (deletedSet: Set) => {
     dispatch(deleteSet(deletedSet.id));
+    dispatch(deleteParts(deletedSet.idParts));
   };
   return (
     <View>
