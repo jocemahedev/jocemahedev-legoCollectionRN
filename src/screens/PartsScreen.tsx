@@ -5,7 +5,7 @@ import PartsList from '../components/PartsList';
 
 import {useReduxDispatch, useReduxSelector} from '../redux';
 import {updateQuantityCurrentSet, updateQuantitySet} from '../redux/collection';
-import {selectAllParts} from '../redux/set';
+import {selectAllParts, selectPartsByColor} from '../redux/set';
 
 export default function ({navigation}: any) {
   const goTo = () => {
@@ -16,12 +16,13 @@ export default function ({navigation}: any) {
     dispatch(updateQuantitySet(quantityCollectorParts));
     dispatch(updateQuantityCurrentSet(quantityCollectorParts));
   });
-  const allParts = useReduxSelector(selectAllParts);
-  const quantityCollectorParts = allParts.reduce(
+  const allParts = useReduxSelector(selectPartsByColor);
+  const allQuantityParts = useReduxSelector(selectAllParts);
+  const quantityCollectorParts = allQuantityParts.reduce(
     (tot, part) => tot + part.quantityCollectorPart,
     0,
   );
-  const quantityParts = allParts.reduce(
+  const quantityParts = allQuantityParts.reduce(
     (tot, part) => tot + part.quantityPart,
     0,
   );

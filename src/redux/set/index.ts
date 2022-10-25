@@ -3,9 +3,8 @@ import {
   createSlice,
   createSelector,
   createAsyncThunk,
-  current,
 } from '@reduxjs/toolkit';
-import {Set, Part, Color, SetWithParts} from '../../types/types';
+import {Set, Part, Color} from '../../types/types';
 import {db} from './../services/firebase/firebaseConfig';
 import {
   ref,
@@ -18,16 +17,18 @@ import {
 import {RootState} from '..';
 import {RebrickablePart} from '../services/rebrickable/type';
 import {rebrickableApi} from '../services/rebrickable/rebrickable';
-import {selectCurrentSet, updateQuantitySet} from '../collection';
+import {selectCurrentSet} from '../collection';
 export type SetState = {
   currentSet?: Set;
   allParts: Part[];
   statusParts: 'loading' | 'fulfilled';
+  currentColors: Color[];
 };
 export const initialState: SetState = {
   currentSet: undefined,
   allParts: [],
   statusParts: 'loading',
+  currentColors: [],
 };
 
 export const addParts = createAsyncThunk<void, RebrickablePart[]>(
@@ -45,7 +46,12 @@ export const addParts = createAsyncThunk<void, RebrickablePart[]>(
           idElement: part.element_id,
           idCategory: part.part.part_cat_id,
           index: index,
-          color: part.color,
+          color: {
+            id: part.color.id,
+            name: part.color.name,
+            codeRgb: part.color.rgb,
+            isTransparent: part.color.is_trans,
+          },
           imageUrl: part.part.part_img_url,
           quantityPart: part.quantity,
           quantityCollectorPart: 0,
@@ -137,6 +143,9 @@ const SetSlice = createSlice({
     setAllParts(state, action: PayloadAction<Part[]>) {
       state.allParts = action.payload;
     },
+    setCurrentColors(state, action: PayloadAction<Color[]>) {
+      state.currentColors = action.payload;
+    },
     checkCurrentSetIsCompleted(state) {
       if (state.currentSet) {
         state.currentSet.isCompleted = isCompleted(state.allParts);
@@ -189,15 +198,34 @@ export const selectAllCompletedParts = createSelector(
   (_state, parts) =>
     parts.filter(part => part.quantityCollectorPart === part.quantityPart),
 );
-export const selectPartsByColor = createSelector(
-  [selectSet, selectAllParts, (_state, colors: Color[]) => colors],
-  (_state, parts, colors) => {
-    return parts.filter(part =>
-      colors.find((c: Color) => c.id === part.color.id),
-    );
+export const selectAllColors = createSelector(
+  [selectSet, selectAllParts],
+  (_state, parts) => {
+    return parts.reduce<Color[]>((colorsTab, part) => {
+      if (colorsTab.findIndex(color => color.id === part.color.id) === -1) {
+        colorsTab.push(part.color);
+      }
+      console.log('colorsTab');
+      console.log(colorsTab);
+      return colorsTab;
+    }, []);
   },
 );
 
-export const {setAllParts, checkCurrentSetIsCompleted} = SetSlice.actions;
+export const selectPartsByColor = createSelector(
+  [selectSet, selectAllParts],
+  (state, parts) => {
+    if (state.currentColors.length < 1) {
+      return parts;
+    } else {
+      return parts.filter(part =>
+        state.currentColors.find((c: Color) => c.id === part.color.id),
+      );
+    }
+  },
+);
+
+export const {setAllParts, checkCurrentSetIsCompleted, setCurrentColors} =
+  SetSlice.actions;
 
 export default SetSlice.reducer;
