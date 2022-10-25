@@ -13,7 +13,7 @@ export type RebrickableSet = {
 export type RebrickablePart = {
   index: number;
   id: string;
-  color: Color;
+  color: ColorRebrickable;
   cat_id: string;
   part: SubRebrickablePart;
   element_id: string;
@@ -21,6 +21,12 @@ export type RebrickablePart = {
   quantity: number;
   inv_part_id: string;
   is_spare: boolean;
+};
+export type ColorRebrickable = {
+  id: string;
+  name: string;
+  rgb: string;
+  is_trans: boolean;
 };
 export type SubRebrickablePart = {
   part_img_url: string;

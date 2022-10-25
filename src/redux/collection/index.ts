@@ -19,8 +19,6 @@ import {
 } from 'firebase/database';
 import {RootState} from '..';
 import {RebrickableSet} from '../services/rebrickable/type';
-import {setCurrentSet} from '../set';
-import {useDispatch} from 'react-redux';
 
 export type CollectionState = {
   currentCollection: Collection | undefined;
@@ -115,6 +113,13 @@ export const deleteSet = createAsyncThunk<void, string>(
       await remove(dbRef);
       dispatch(deleteSetToCollection(idSet));
     }
+  },
+);
+export const deleteParts = createAsyncThunk<void, string>(
+  'collection/deleteParts',
+  async idParts => {
+    const dbRef = ref(db, '/parts/' + idParts);
+    await remove(dbRef);
   },
 );
 export const addSet = createAsyncThunk<void, RebrickableSet>(
