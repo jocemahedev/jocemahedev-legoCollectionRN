@@ -2,7 +2,12 @@ import {IconButton, Stack} from '@react-native-material/core';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {Part} from '../types/types';
-import {decrementPart, fetchParts, incrementPart} from '../redux/set';
+import {
+  completePart,
+  decrementPart,
+  fetchParts,
+  incrementPart,
+} from '../redux/set';
 import {useReduxDispatch} from '../redux';
 
 const Quantity = ({part}: QuantityProps) => {
@@ -25,6 +30,13 @@ const Quantity = ({part}: QuantityProps) => {
           dispatch(fetchParts());
         }}
         icon={<Text>+</Text>}
+      />
+      <IconButton
+        onPress={() => {
+          dispatch(completePart(part));
+          dispatch(fetchParts());
+        }}
+        icon={<Text>✔️</Text>}
       />
     </Stack>
   );

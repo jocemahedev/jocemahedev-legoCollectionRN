@@ -23,12 +23,14 @@ export type SetState = {
   allParts: Part[];
   statusParts: 'loading' | 'fulfilled';
   currentColors: Color[];
+  currentCompleteFilter: 'none' | 'complete' | 'incomplete';
 };
 export const initialState: SetState = {
   currentSet: undefined,
   allParts: [],
   statusParts: 'loading',
   currentColors: [],
+  currentCompleteFilter: 'none',
 };
 
 export const addParts = createAsyncThunk<void, RebrickablePart[]>(
@@ -111,6 +113,26 @@ export const incrementPart = createAsyncThunk<boolean, Part>(
     return false;
   },
 );
+export const completePart = createAsyncThunk<boolean, Part>(
+  'set/completePart',
+  async (part, {getState}) => {
+    const rootState = getState() as RootState;
+    const currentSet = selectCurrentSet(rootState);
+    const indexPart = part.index;
+    if (part.quantityCollectorPart !== part.quantityPart) {
+      const newQuantity = part.quantityPart;
+      if (currentSet) {
+        const dbRef = ref(
+          db,
+          '/parts/' + currentSet?.idParts + '/' + indexPart,
+        );
+        await updatePart(dbRef, newQuantity);
+        return true;
+      }
+    }
+    return false;
+  },
+);
 export const decrementPart = createAsyncThunk<void, Part>(
   'set/decrementPart',
   async (part, {getState}) => {
@@ -145,6 +167,12 @@ const SetSlice = createSlice({
     },
     setCurrentColors(state, action: PayloadAction<Color[]>) {
       state.currentColors = action.payload;
+    },
+    setCurrentCompleteFilter(
+      state,
+      action: PayloadAction<'none' | 'complete' | 'incomplete'>,
+    ) {
+      state.currentCompleteFilter = action.payload;
     },
     checkCurrentSetIsCompleted(state) {
       if (state.currentSet) {
@@ -224,8 +252,28 @@ export const selectPartsByColor = createSelector(
     }
   },
 );
+export const selectPartsByColorByCompleted = createSelector(
+  [selectSet, selectPartsByColor],
+  (state, parts) => {
+    if (state.currentCompleteFilter === 'complete') {
+      return parts.filter(
+        part => part.quantityCollectorPart === part.quantityPart,
+      );
+    } else if (state.currentCompleteFilter === 'incomplete') {
+      return parts.filter(
+        part => part.quantityCollectorPart < part.quantityPart,
+      );
+    } else {
+      return parts;
+    }
+  },
+);
 
-export const {setAllParts, checkCurrentSetIsCompleted, setCurrentColors} =
-  SetSlice.actions;
+export const {
+  setAllParts,
+  checkCurrentSetIsCompleted,
+  setCurrentColors,
+  setCurrentCompleteFilter,
+} = SetSlice.actions;
 
 export default SetSlice.reducer;

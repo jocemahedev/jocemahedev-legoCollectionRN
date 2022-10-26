@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
-import { Part} from '../types/types';
+import {Part} from '../types/types';
 import {ListItem, Avatar} from '@react-native-material/core';
 import Quantity from './Quantity';
 import {useReduxDispatch, useReduxSelector} from '../redux';
 import {fetchParts, selectAllColors} from '../redux/set';
 import ColorsList from './ColorsList';
+import CompletePartsFilter from './CompletePartsFilter';
 
 export default function PartsList({parts}: PartsListProps) {
   const dispatch = useReduxDispatch();
@@ -17,6 +18,7 @@ export default function PartsList({parts}: PartsListProps) {
   return (
     <View>
       <ColorsList colors={allColors} />
+      <CompletePartsFilter />
       <FlatList
         data={parts}
         renderItem={({item}) => <Item part={item} />}
