@@ -182,24 +182,21 @@ const SetSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchParts.pending, (_state, _action) => {
-        console.log('fetch parts pending');
+      .addCase(fetchParts.pending, (state, _action) => {
+        state.statusParts = 'loading';
       })
-      .addCase(fetchParts.fulfilled, (_state, _action) => {
-        console.log('fetch parts fulfilled');
+      .addCase(fetchParts.fulfilled, (state, _action) => {
+        state.statusParts = 'fulfilled';
       })
-      .addCase(incrementPart.fulfilled, (state, action) => {
+      .addCase(incrementPart.fulfilled, (_state, _action) => {
         console.log('on pass dans increment');
-        if (action.payload) {
-          // incrementCollectorParts();
-        }
 
         console.log('on pass dans increment fin');
       })
-      .addCase(decrementPart.fulfilled, (state, action) => {
+      .addCase(decrementPart.fulfilled, (_state, _action) => {
         console.log('on pass dans decrement');
       })
-      .addCase(fetchParts.rejected, (state, action) => {});
+      .addCase(fetchParts.rejected, (_state, _action) => {});
   },
 });
 export type PayloadActionCollectorPart = {
@@ -233,8 +230,6 @@ export const selectAllColors = createSelector(
       if (colorsTab.findIndex(color => color.id === part.color.id) === -1) {
         colorsTab.push(part.color);
       }
-      console.log('colorsTab');
-      console.log(colorsTab);
       return colorsTab;
     }, []);
   },
