@@ -52,14 +52,10 @@ export const fetchSets = createAsyncThunk<void, void>(
 export const updateQuantitySet = createAsyncThunk<void, number>(
   'collection/updateQuantitySet',
   async (quantity, {getState}) => {
-    console.log('updateQuantitySet');
     const rootState = getState() as RootState;
     const idSets = rootState.collection.currentCollection?.idSets;
     const currentSet = selectCurrentSet(rootState);
     const idSet = currentSet?.id;
-    console.log('currentSet.quantityCollectorParts');
-    console.log(currentSet?.quantityCollectorParts);
-    console.log(quantity);
     const dbRef = ref(db, '/collections/' + idSets + '/' + idSet);
     await updateSet(dbRef, quantity);
   },

@@ -1,7 +1,8 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 export type Collector = {
-  name: string;
+  name: string | null;
+  email: string | null;
   collection: Collection | undefined;
 };
 export type Collection = {
@@ -51,6 +52,7 @@ export type Color = {
   codeRgb: string;
 };
 export type RootStackParamList = {
+  LoginScreen: undefined;
   HomeScreen: undefined;
   CollectionScreen: undefined;
   SetScreen: undefined;

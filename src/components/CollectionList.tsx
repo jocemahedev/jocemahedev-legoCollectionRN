@@ -16,8 +16,6 @@ export default function CollectionList({pressSet}: CollectionListProps) {
   const currentCollection = useReduxSelector(selectCurrentCollection);
   const allSets = useReduxSelector(selectAllSets);
   const dispatch = useReduxDispatch();
-
-  console.log(allSets);
   useEffect(() => {
     dispatch(fetchSets());
     console.log('fetchSet CollectionList');

@@ -263,6 +263,11 @@ export const selectPartsByColorByCompleted = createSelector(
     }
   },
 );
+export const selectCurrentColors = (state: RootState): Color[] =>
+  state.set.currentColors;
+export const selectCurrentCompleteFilter = (
+  state: RootState,
+): 'none' | 'complete' | 'incomplete' => state.set.currentCompleteFilter;
 
 export const {
   setAllParts,
