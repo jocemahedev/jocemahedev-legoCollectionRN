@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import {Part} from '../types/types';
 import {
@@ -26,8 +26,11 @@ const PartsList = ({parts}: PartsListProps) => {
   }, [dispatch]);
   return (
     <View>
-      {isLoading && <ActivityIndicator />}
-      {!isLoading && (
+      {
+        //isLoading && <ActivityIndicator />
+      }
+      {
+        //!isLoading &&
         <>
           <ColorsList colors={allColors} />
           <CompletePartsFilter />
@@ -40,7 +43,7 @@ const PartsList = ({parts}: PartsListProps) => {
             />
           )}
         </>
-      )}
+      }
     </View>
   );
 };
