@@ -15,8 +15,6 @@ export default function ColorsList({colors}: ColorsListProps) {
     return '#' + color.codeRgb;
   };
   useEffect(() => {
-    console.log('activeColors');
-    console.log(activeColors);
     dispatch(setCurrentColors(activeColors));
   }, [dispatch, activeColors]);
   const colorHandler = (color: Color): void => {
@@ -28,6 +26,13 @@ export default function ColorsList({colors}: ColorsListProps) {
       setActiveColors([...activeColors, color]);
     }
   };
+  const getLabelCheckedColor = (color: Color): string => {
+    if (activeColors.find(activeColor => activeColor.id === color.id)) {
+      return '✔️';
+    }
+    return ' ';
+  };
+
   return (
     <ScrollView horizontal>
       {colors.map(color => (
@@ -37,7 +42,10 @@ export default function ColorsList({colors}: ColorsListProps) {
             color={getRGBColor(color)}
             key={color.id}
             onPress={() => colorHandler(color)}>
-            <Badge color={getRGBColor(color)} />
+            <Badge
+              color={getRGBColor(color)}
+              label={getLabelCheckedColor(color)}
+            />
           </Chip>
         </TouchableOpacity>
       ))}
