@@ -24,6 +24,7 @@ export type CollectionState = {
   currentCollection: Collection | undefined;
   allSets: Set[];
   currentSetIndex: number | undefined;
+  addSetStatus: 'none' | 'pending' | 'fulfilled' | 'rejected';
 };
 export const initialState: CollectionState = {
   currentCollection: {
@@ -32,6 +33,7 @@ export const initialState: CollectionState = {
   },
   allSets: [],
   currentSetIndex: undefined,
+  addSetStatus: 'none',
 };
 
 export const fetchSets = createAsyncThunk<void, void>(
@@ -72,6 +74,13 @@ const collectionSlice = createSlice({
     },
     setCurrentSets(state, action: PayloadAction<Set[]>) {
       state.allSets = action.payload;
+      state.addSetStatus = 'none';
+    },
+    setAddSetStatus(
+      state,
+      action: PayloadAction<'none' | 'pending' | 'fulfilled' | 'rejected'>,
+    ) {
+      state.addSetStatus = action.payload;
     },
     setCurrentIndexSet(state, action: PayloadAction<Set>) {
       const payloadSet = action.payload;
@@ -96,6 +105,18 @@ const collectionSlice = createSlice({
         return item.id !== action.payload;
       });
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(addSet.pending, (state, _action) => {
+        state.addSetStatus = 'pending';
+      })
+      .addCase(addSet.rejected, (state, _action) => {
+        state.addSetStatus = 'rejected';
+      })
+      .addCase(addSet.fulfilled, (state, _action) => {
+        state.addSetStatus = 'fulfilled';
+      });
   },
 });
 export const deleteSet = createAsyncThunk<void, string>(
@@ -162,6 +183,14 @@ export const selectCompletedSets = createSelector([selectAllSets], sets =>
 export const selectSetById = (state: RootState, set: Set) =>
   state.collection.allSets.find(item => set.id === item.id);
 
+export const countSets = (state: RootState): number =>
+  state.collection.allSets.length;
+
+export const selectAddSetStatus = (
+  state: RootState,
+): 'none' | 'pending' | 'fulfilled' | 'rejected' =>
+  state.collection.addSetStatus;
+
 export const selectCurrentSet = (state: RootState): Set | undefined => {
   const index = state.collection.currentSetIndex;
   if (index !== undefined) {
@@ -177,6 +206,7 @@ export const {
   updateQuantityCurrentSet,
   addSetToCollection,
   deleteSetToCollection,
+  setAddSetStatus,
 } = collectionSlice.actions;
 
 export default collectionSlice.reducer;

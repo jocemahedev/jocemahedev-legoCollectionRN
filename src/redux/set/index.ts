@@ -64,10 +64,12 @@ export const addParts = createAsyncThunk<void, RebrickablePart[]>(
     dispatch(setAllParts(newParts));
   },
 );
-export const fetchParts = createAsyncThunk<void, void>(
+export const fetchParts = createAsyncThunk<void, 'loading' | 'fulfilled'>(
   'set/fetchParts',
-  async (_, {getState, dispatch}) => {
+  async (status = 'fulfilled', {getState, dispatch}) => {
     const rootState = getState() as RootState;
+    console.log('status fetchParts ' + status);
+    rootState.set.statusParts = status;
     const currentSet = selectCurrentSet(rootState);
     console.log('currentSet');
     console.log(currentSet);
@@ -182,15 +184,12 @@ const SetSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchParts.pending, (state, _action) => {
-        state.statusParts = 'loading';
-      })
+      .addCase(fetchParts.pending, (_state, _action) => {})
       .addCase(fetchParts.fulfilled, (state, _action) => {
         state.statusParts = 'fulfilled';
       })
       .addCase(incrementPart.fulfilled, (_state, _action) => {
         console.log('on pass dans increment');
-
         console.log('on pass dans increment fin');
       })
       .addCase(decrementPart.fulfilled, (_state, _action) => {

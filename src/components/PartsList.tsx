@@ -22,15 +22,12 @@ const PartsList = ({parts}: PartsListProps) => {
   const ZERO_PART_MESSAGE = ' Zéro pièce trouvé 🤦';
 
   useEffect(() => {
-    dispatch(fetchParts());
+    dispatch(fetchParts('loading'));
   }, [dispatch]);
   return (
     <View>
-      {
-        //isLoading && <ActivityIndicator />
-      }
-      {
-        //!isLoading &&
+      {isLoading && <ActivityIndicator />}
+      {!isLoading && (
         <>
           <ColorsList colors={allColors} />
           <CompletePartsFilter />
@@ -43,7 +40,7 @@ const PartsList = ({parts}: PartsListProps) => {
             />
           )}
         </>
-      }
+      )}
     </View>
   );
 };

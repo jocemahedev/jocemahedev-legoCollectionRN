@@ -1,7 +1,7 @@
 // Need to use the React-specific entry point to import createApi
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/dist/query/react';
 import {RebrickablePart, RebrickableSet} from './type';
-import {addParts, setAllParts} from '../../set';
+import {addParts} from '../../set';
 import {REBRICKABLE_API_KEY} from '@env';
 const key = REBRICKABLE_API_KEY;
 
