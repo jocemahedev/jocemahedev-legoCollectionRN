@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
-import {Chip} from '@react-native-material/core';
+import {ScrollView} from 'react-native';
 import {useReduxDispatch} from '../redux';
 import {setCurrentCompleteFilter} from '../redux/set';
+import {SegmentedButtons} from 'react-native-paper';
 
 export default function CompletePartsFilter() {
   const dispatch = useReduxDispatch();
   const [completeFilter, setCompleteFilter] = useState<
     'none' | 'complete' | 'incomplete'
   >('none');
-
+  const [value, setValue] = useState('');
   useEffect(() => {
     console.log('completeFilter');
     dispatch(setCurrentCompleteFilter(completeFilter));
@@ -17,34 +17,37 @@ export default function CompletePartsFilter() {
   const completeFilterHandler = (
     filterComplete: 'none' | 'complete' | 'incomplete',
   ): void => {
-    setCompleteFilter(filterComplete);
+    if (completeFilter === filterComplete) {
+      setCompleteFilter('none');
+    } else {
+      setCompleteFilter(filterComplete);
+    }
+  };
+  const segmentedButtonHandler = (newValue: string): void => {
+    if (value === newValue) {
+      setValue('');
+    } else {
+      setValue(newValue);
+    }
   };
   return (
     <ScrollView horizontal>
-      <TouchableOpacity>
-        <Chip
-          label={'No filter'}
-          color={'#000'}
-          key={'none'}
-          onPress={() => completeFilterHandler('none')}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Chip
-          label={'Complete Parts only'}
-          color={'#000'}
-          key={'complete'}
-          onPress={() => completeFilterHandler('complete')}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Chip
-          label={'Incomplete Parts only'}
-          color={'#000'}
-          key={'incomplete'}
-          onPress={() => completeFilterHandler('incomplete')}
-        />
-      </TouchableOpacity>
+      <SegmentedButtons
+        value={value}
+        onValueChange={segmentedButtonHandler}
+        buttons={[
+          {
+            value: 'complete',
+            label: 'Complete parts',
+            onPress: () => completeFilterHandler('complete'),
+          },
+          {
+            value: 'incomplete',
+            label: 'Incomplete parts',
+            onPress: () => completeFilterHandler('incomplete'),
+          },
+        ]}
+      />
     </ScrollView>
   );
 }
