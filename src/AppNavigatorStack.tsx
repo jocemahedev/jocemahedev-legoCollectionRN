@@ -1,28 +1,41 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CollectionScreen from './screens/CollectionScreen';
-import HomeScreen from './screens/HomeScreen';
 import SetScreen from './screens/SetScreen';
 import PartsScreen from './screens/PartsScreen';
 import LoginScreen from './screens/LoginScreen';
 import {RootStackParamList} from './types/types';
+import {Button} from '@react-native-material/core';
+import {signOut} from 'firebase/auth';
+import {auth} from './redux/services/firebase/firebaseConfig';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AppNavigatorStack() {
   return (
     <RootStack.Navigator>
-      <RootStack.Screen name="LoginScreen" component={LoginScreen} />
-      <RootStack.Screen name="HomeScreen" component={HomeScreen} />
+      <RootStack.Screen name="Login" component={LoginScreen} />
       <RootStack.Screen
-        name="CollectionScreen"
+        name="My Collection"
         component={CollectionScreen}
-        options={{
+        options={({navigation}) => ({
           headerBackVisible: false,
-        }}
+          headerRight: () => (
+            <Button
+              onPress={() =>
+                signOut(auth).then(() => {
+                  // Sign-out successful.
+                  navigation.navigate('Login');
+                })
+              }
+              title="Logout"
+              color="#fff"
+            />
+          ),
+        })}
       />
-      <RootStack.Screen name="SetScreen" component={SetScreen} />
-      <RootStack.Screen name="PartsScreen" component={PartsScreen} />
+      <RootStack.Screen name="Set" component={SetScreen} />
+      <RootStack.Screen name="Parts" component={PartsScreen} />
     </RootStack.Navigator>
   );
 }

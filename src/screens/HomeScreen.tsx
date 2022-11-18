@@ -12,7 +12,7 @@ export default function ({navigation}) {
         idSets: '12345',
       }),
     );
-    navigation.navigate('CollectionScreen');
+    navigation.navigate('Collection');
   };
 
   return (

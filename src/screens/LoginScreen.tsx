@@ -4,7 +4,7 @@ import UserAuthentification from '../components/UserAuthentification';
 
 export default function ({navigation}: any) {
   const goToCollection = () => {
-    navigation.navigate('CollectionScreen');
+    navigation.navigate('My Collection');
   };
 
   return (

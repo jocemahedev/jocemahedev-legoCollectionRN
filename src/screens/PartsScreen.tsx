@@ -9,7 +9,7 @@ import {selectAllParts, selectPartsByColorByCompleted} from '../redux/set';
 
 export default function ({navigation}: any) {
   const goTo = () => {
-    navigation.navigate('CollectionScreen');
+    navigation.navigate('Collection');
   };
   const dispatch = useReduxDispatch();
   useEffect(() => {
