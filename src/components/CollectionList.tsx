@@ -1,6 +1,7 @@
 import {Avatar, ListItem, Text} from '@react-native-material/core';
 import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
+import {Button} from 'react-native-paper';
 import {useReduxDispatch, useReduxSelector} from '../redux';
 import {
   fetchSets,
@@ -45,7 +46,7 @@ function Item({set, onPress}: ItemProps) {
         leadingMode="avatar"
         title={set.name}
         leading={<Avatar image={{uri: set.imageUrl}} />}
-        trailing={<Text onPress={() => deleteSetHandler(set)}>Delete</Text>}
+        trailing={<Button icon="trash" onPress={() => deleteSetHandler(set)} />}
         secondaryText={
           <Text>
             {set.quantityCollectorParts}/{set.quantityParts}

@@ -1,7 +1,8 @@
-import {IconButton, Stack} from '@react-native-material/core';
+import { Stack} from '@react-native-material/core';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {Part} from '../types/types';
+import {Button} from 'react-native-paper';
 import {
   completePart,
   decrementPart,
@@ -14,29 +15,29 @@ const Quantity = ({part}: QuantityProps) => {
   const dispatch = useReduxDispatch();
   return (
     <Stack direction="row" spacing={1} style={styles.stackQuantity}>
-      <IconButton
+      <Button
         onPress={() => {
           dispatch(decrementPart(part));
           dispatch(fetchParts());
         }}
-        icon={<Text>-</Text>}
+        icon="minus"
       />
       <Text style={styles.quantity}>
         {part.quantityCollectorPart} sur {part.quantityPart}
       </Text>
-      <IconButton
+      <Button
         onPress={() => {
           dispatch(incrementPart(part));
           dispatch(fetchParts());
         }}
-        icon={<Text>+</Text>}
+        icon="plus"
       />
-      <IconButton
+      <Button
         onPress={() => {
           dispatch(completePart(part));
           dispatch(fetchParts());
         }}
-        icon={<Text>✔️</Text>}
+        icon="check"
       />
     </Stack>
   );
@@ -52,13 +53,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   quantity: {
-    paddingTop: 15,
-  },
-  all: {
-    paddingTop: 15,
-    paddingRight: 10,
-    fontWeight: 'bold',
-    fontSize: 16,
+    paddingTop: 7,
   },
 });
 
