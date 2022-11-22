@@ -16,7 +16,11 @@ export const rebrickableApi = createApi({
       query: idLego => 'sets/' + idLego + '?page_size=1000&key=' + key,
     }),
     getPartsByIdLego: builder.query<RebrickablePart[], string>({
-      query: idLego => 'sets/' + idLego + '/parts?page_size=1000&key=' + key,
+      query: idLego =>
+        'sets/' +
+        idLego +
+        '/parts?inc_minifig_parts=1&page_size=1000&key=' +
+        key,
       transformResponse: (response: any) => response.results,
       async onQueryStarted(arg, {dispatch, queryFulfilled}) {
         // `onStart` side-effect

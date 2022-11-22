@@ -42,6 +42,11 @@ export const addParts = createAsyncThunk<void, RebrickablePart[]>(
     const newParts: Part[] = rebrickableParts
       .filter(part => part.is_spare === false)
       .map((part, index) => {
+        const isMiniFig = part.set_num.startsWith('fig');
+        let idMiniFig = null;
+        if (isMiniFig) {
+          idMiniFig = part.set_num;
+        }
         return {
           id: part.id,
           name: part.part.name,
@@ -57,7 +62,9 @@ export const addParts = createAsyncThunk<void, RebrickablePart[]>(
           imageUrl: part.part.part_img_url,
           quantityPart: part.quantity,
           quantityCollectorPart: 0,
-          idSet: part.set_num,
+          idSet: currentSet?.idLego,
+          isMiniFig: isMiniFig,
+          idMiniFig: idMiniFig,
         };
       });
     set(parts, newParts);
@@ -90,6 +97,7 @@ export const fetchParts = createAsyncThunk<void, 'loading' | 'fulfilled'>(
         );
       } else {
         console.log('on fetch parts firebase');
+        console.log(datas);
         dispatch(setAllParts(datas));
       }
     }

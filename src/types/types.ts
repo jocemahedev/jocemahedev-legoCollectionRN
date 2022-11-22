@@ -40,6 +40,8 @@ export type Part = {
   quantityPart: number;
   quantityCollectorPart: number;
   idSet: string;
+  isMiniFig: boolean;
+  idMiniFig: string | null;
 };
 export type SetWithParts = {
   set: Set;
