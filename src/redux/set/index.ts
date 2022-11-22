@@ -24,6 +24,7 @@ export type SetState = {
   statusParts: 'loading' | 'fulfilled';
   currentColors: Color[];
   currentCompleteFilter: 'none' | 'complete' | 'incomplete';
+  onlyMinifig: boolean;
 };
 export const initialState: SetState = {
   currentSet: undefined,
@@ -31,6 +32,7 @@ export const initialState: SetState = {
   statusParts: 'loading',
   currentColors: [],
   currentCompleteFilter: 'none',
+  onlyMinifig: false,
 };
 
 export const addParts = createAsyncThunk<void, RebrickablePart[]>(
@@ -184,6 +186,9 @@ const SetSlice = createSlice({
     ) {
       state.currentCompleteFilter = action.payload;
     },
+    setOnlyMinifig(state, action: PayloadAction<boolean>) {
+      state.onlyMinifig = action.payload;
+    },
     checkCurrentSetIsCompleted(state) {
       if (state.currentSet) {
         state.currentSet.isCompleted = isCompleted(state.allParts);
@@ -241,9 +246,17 @@ export const selectAllColors = createSelector(
     }, []);
   },
 );
-
-export const selectPartsByColor = createSelector(
+export const selectByMiniFig = createSelector(
   [selectSet, selectAllParts],
+  (state, parts) => {
+    if (state.onlyMinifig) {
+      return parts.filter(part => part.isMiniFig === state.onlyMinifig);
+    }
+    return parts;
+  },
+);
+export const selectPartsByColor = createSelector(
+  [selectSet, selectByMiniFig],
   (state, parts) => {
     if (state.currentColors.length < 1) {
       return parts;
@@ -254,6 +267,7 @@ export const selectPartsByColor = createSelector(
     }
   },
 );
+
 export const selectPartsByColorByCompleted = createSelector(
   [selectSet, selectPartsByColor],
   (state, parts) => {
@@ -275,12 +289,15 @@ export const selectCurrentColors = (state: RootState): Color[] =>
 export const selectCurrentCompleteFilter = (
   state: RootState,
 ): 'none' | 'complete' | 'incomplete' => state.set.currentCompleteFilter;
+export const selectMinifigFilter = (state: RootState): boolean =>
+  state.set.onlyMinifig;
 
 export const {
   setAllParts,
   checkCurrentSetIsCompleted,
   setCurrentColors,
   setCurrentCompleteFilter,
+  setOnlyMinifig,
 } = SetSlice.actions;
 
 export default SetSlice.reducer;

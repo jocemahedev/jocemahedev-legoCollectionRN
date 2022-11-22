@@ -12,6 +12,7 @@ import {useReduxDispatch, useReduxSelector} from '../redux';
 import {fetchParts, selectAllColors, selectStatus} from '../redux/set';
 import ColorsList from './ColorsList';
 import CompletePartsFilter from './CompletePartsFilter';
+import OnlyMinifigFilter from './OnlyMinifigFilter';
 
 const PartsList = ({parts}: PartsListProps) => {
   const dispatch = useReduxDispatch();
@@ -31,6 +32,7 @@ const PartsList = ({parts}: PartsListProps) => {
         <>
           <ColorsList colors={allColors} />
           <CompletePartsFilter />
+          <OnlyMinifigFilter />
           {zeroPart && <Text>{ZERO_PART_MESSAGE}</Text>}
           {!zeroPart && (
             <FlatList
