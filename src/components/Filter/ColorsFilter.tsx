@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableOpacity} from 'react-native';
-import {Color} from '../types/types';
+import {Color} from '../../types/types';
 import {Chip, Badge} from '@react-native-material/core';
-import {useReduxDispatch} from '../redux';
-import {setCurrentColors} from '../redux/set';
+import {useReduxDispatch} from '../../redux';
+import {setCurrentColors} from '../../redux/set';
 
-export default function ColorsList({colors}: ColorsListProps) {
+export default function ColorsFilter({colors}: ColorsFilterProps) {
   const dispatch = useReduxDispatch();
   const [activeColors, setActiveColors] = useState<Color[]>([]);
   const getRGBColor = (color: Color): string => {
@@ -52,6 +52,6 @@ export default function ColorsList({colors}: ColorsListProps) {
     </ScrollView>
   );
 }
-type ColorsListProps = {
+type ColorsFilterProps = {
   colors: Color[];
 };

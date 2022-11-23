@@ -1,36 +1,22 @@
-import {Text} from '@react-native-material/core';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Button} from 'react-native';
-import PartsList from '../components/PartsList';
+import PartsList from '../components/List/PartsList';
 
-import {useReduxDispatch, useReduxSelector} from '../redux';
-import {updateQuantityCurrentSet, updateQuantitySet} from '../redux/collection';
-import {selectAllParts, selectPartsByColorByCompleted} from '../redux/set';
+import QuantityParts from '../components/Set/QuantityParts';
+
+import {useReduxSelector} from '../redux';
+
+import {selectPartsByColorByCompleted} from '../redux/set';
 
 export default function ({navigation}: any) {
   const goTo = () => {
     navigation.navigate('Collection');
   };
-  const dispatch = useReduxDispatch();
-  useEffect(() => {
-    dispatch(updateQuantitySet(quantityCollectorParts));
-    dispatch(updateQuantityCurrentSet(quantityCollectorParts));
-  });
   const allParts = useReduxSelector(selectPartsByColorByCompleted);
-  const allQuantityParts = useReduxSelector(selectAllParts);
-  const quantityCollectorParts = allQuantityParts.reduce(
-    (tot, part) => tot + part.quantityCollectorPart,
-    0,
-  );
-  const quantityParts = allQuantityParts.reduce(
-    (tot, part) => tot + part.quantityPart,
-    0,
-  );
+
   return (
     <View>
-      <Text>
-        {quantityCollectorParts}/{quantityParts}
-      </Text>
+      <QuantityParts />
       <PartsList parts={allParts} />
       <Button onPress={() => goTo()} title={`Return to Collection`} />
     </View>

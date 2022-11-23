@@ -3,7 +3,7 @@ import {signOut} from 'firebase/auth';
 import React from 'react';
 
 import {View} from 'react-native';
-import CollectionList from '../components/CollectionList';
+import CollectionList from '../components/List/CollectionList';
 import {useReduxDispatch} from '../redux';
 import {setCurrentIndexSet} from '../redux/collection';
 

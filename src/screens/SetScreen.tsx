@@ -2,7 +2,7 @@ import {Button, Text, TextInput} from '@react-native-material/core';
 import React, {useState} from 'react';
 
 import {View} from 'react-native';
-import SetSearchResult from '../components/SetSearchResult';
+import SetSearchResult from '../components/Set/SetSearchResult';
 import {useReduxDispatch, useReduxSelector} from '../redux';
 import {countSets, setAddSetStatus} from '../redux/collection';
 

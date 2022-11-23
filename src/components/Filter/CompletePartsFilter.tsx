@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
-import {useReduxDispatch} from '../redux';
-import {setCurrentCompleteFilter} from '../redux/set';
+import {useReduxDispatch} from '../../redux';
+import {setCurrentCompleteFilter} from '../../redux/set';
 import {SegmentedButtons} from 'react-native-paper';
 
 export default function CompletePartsFilter() {

@@ -2,16 +2,16 @@ import {Avatar, ListItem, Text} from '@react-native-material/core';
 import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import {useReduxDispatch, useReduxSelector} from '../redux';
+import {useReduxDispatch, useReduxSelector} from '../../redux';
 import {
   fetchSets,
   selectAllSets,
   selectCurrentCollection,
   deleteSet,
   deleteParts,
-} from '../redux/collection';
+} from '../../redux/collection';
 
-import {Set} from '../types/types';
+import {Set} from '../../types/types';
 
 export default function CollectionList({pressSet}: CollectionListProps) {
   const currentCollection = useReduxSelector(selectCurrentCollection);

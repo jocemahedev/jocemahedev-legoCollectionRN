@@ -1,18 +1,18 @@
 import React, {useEffect} from 'react';
 import {FlatList, View} from 'react-native';
-import {Part} from '../types/types';
+import {Part} from '../../types/types';
 import {
   ListItem,
   Avatar,
   Text,
   ActivityIndicator,
 } from '@react-native-material/core';
-import Quantity from './Quantity';
-import {useReduxDispatch, useReduxSelector} from '../redux';
-import {fetchParts, selectAllColors, selectStatus} from '../redux/set';
-import ColorsList from './ColorsList';
-import CompletePartsFilter from './CompletePartsFilter';
-import OnlyMinifigFilter from './OnlyMinifigFilter';
+import Quantity from '../Part/Quantity';
+import {useReduxDispatch, useReduxSelector} from '../../redux';
+import {fetchParts, selectAllColors, selectStatus} from '../../redux/set';
+import ColorsFilter from '../Filter/ColorsFilter';
+import CompletePartsFilter from '../Filter/CompletePartsFilter';
+import OnlyMinifigFilter from '../Filter/OnlyMinifigFilter';
 
 const PartsList = ({parts}: PartsListProps) => {
   const dispatch = useReduxDispatch();
@@ -30,7 +30,7 @@ const PartsList = ({parts}: PartsListProps) => {
       {isLoading && <ActivityIndicator />}
       {!isLoading && (
         <>
-          <ColorsList colors={allColors} />
+          <ColorsFilter colors={allColors} />
           <CompletePartsFilter />
           <OnlyMinifigFilter />
           {zeroPart && <Text>{ZERO_PART_MESSAGE}</Text>}

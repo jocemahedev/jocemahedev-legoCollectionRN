@@ -2,11 +2,11 @@ import {Surface, Text} from '@react-native-material/core';
 import {Image} from '@rneui/base';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useReduxDispatch, useReduxSelector} from '../redux';
-import {selectAddSetStatus, setAddSetStatus} from '../redux/collection';
+import {useReduxDispatch, useReduxSelector} from '../../redux';
+import {selectAddSetStatus, setAddSetStatus} from '../../redux/collection';
 import {ActivityIndicator, Snackbar} from 'react-native-paper';
 
-import {useGetSetByIdLegoQuery} from '../redux/services/rebrickable/rebrickable';
+import {useGetSetByIdLegoQuery} from '../../redux/services/rebrickable/rebrickable';
 import AddSet from './AddSet';
 
 const SetSearchResult = ({setIdLego}: SetSearchResultProps) => {

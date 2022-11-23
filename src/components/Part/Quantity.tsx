@@ -1,15 +1,15 @@
-import { Stack} from '@react-native-material/core';
+import {Stack} from '@react-native-material/core';
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {Part} from '../types/types';
+import {Part} from '../../types/types';
 import {Button} from 'react-native-paper';
 import {
   completePart,
   decrementPart,
   incrementPart,
   updateParts,
-} from '../redux/set';
-import {useReduxDispatch} from '../redux';
+} from '../../redux/set';
+import {useReduxDispatch} from '../../redux';
 
 const Quantity = ({part}: QuantityProps) => {
   const dispatch = useReduxDispatch();
