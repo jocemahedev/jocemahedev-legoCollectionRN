@@ -6,8 +6,8 @@ import {Button} from 'react-native-paper';
 import {
   completePart,
   decrementPart,
-  fetchParts,
   incrementPart,
+  updateParts,
 } from '../redux/set';
 import {useReduxDispatch} from '../redux';
 
@@ -18,7 +18,7 @@ const Quantity = ({part}: QuantityProps) => {
       <Button
         onPress={() => {
           dispatch(decrementPart(part));
-          dispatch(fetchParts());
+          dispatch(updateParts());
         }}
         icon="minus"
       />
@@ -28,14 +28,14 @@ const Quantity = ({part}: QuantityProps) => {
       <Button
         onPress={() => {
           dispatch(incrementPart(part));
-          dispatch(fetchParts());
+          dispatch(updateParts());
         }}
         icon="plus"
       />
       <Button
         onPress={() => {
           dispatch(completePart(part));
-          dispatch(fetchParts());
+          dispatch(updateParts());
         }}
         icon="check"
       />

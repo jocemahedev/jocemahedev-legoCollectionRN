@@ -73,37 +73,38 @@ export const addParts = createAsyncThunk<void, RebrickablePart[]>(
     dispatch(setAllParts(newParts));
   },
 );
-export const fetchParts = createAsyncThunk<void, 'loading' | 'fulfilled'>(
-  'set/fetchParts',
-  async (status = 'fulfilled', {getState, dispatch}) => {
-    const rootState = getState() as RootState;
-    console.log('status fetchParts ' + status);
-    rootState.set.statusParts = status;
-    const currentSet = selectCurrentSet(rootState);
-    console.log('currentSet');
-    console.log(currentSet);
-    if (currentSet) {
-      const dbRef = ref(db, '/parts/' + currentSet?.idParts);
-      const dataSnapshot = await get(query(dbRef));
-      const values: Part[] = dataSnapshot.val();
-      let datas: Part[] = [];
-      for (const data in values) {
-        datas.push(values[data]);
-      }
-      if (datas.length <= 0) {
-        console.log('on fetch nvelle parts');
-        dispatch(
-          rebrickableApi.endpoints.getPartsByIdLego.initiate(
-            currentSet?.idLego,
-          ),
-        );
-      } else {
-        console.log('on fetch parts firebase');
-        console.log(datas);
-        dispatch(setAllParts(datas));
-      }
+const fetchPartsAction = async (_: any, {getState, dispatch}) => {
+  const rootState = getState() as RootState;
+  const currentSet = selectCurrentSet(rootState);
+  console.log('currentSet');
+  console.log(currentSet);
+  if (currentSet) {
+    const dbRef = ref(db, '/parts/' + currentSet?.idParts);
+    const dataSnapshot = await get(query(dbRef));
+    const values: Part[] = dataSnapshot.val();
+    let datas: Part[] = [];
+    for (const data in values) {
+      datas.push(values[data]);
     }
-  },
+    if (datas.length <= 0) {
+      console.log('on fetch nvelle parts');
+      dispatch(
+        rebrickableApi.endpoints.getPartsByIdLego.initiate(currentSet?.idLego),
+      );
+    } else {
+      console.log('on fetch parts firebase');
+      console.log(datas);
+      dispatch(setAllParts(datas));
+    }
+  }
+};
+export const fetchParts = createAsyncThunk<void, void>(
+  'set/fetchParts',
+  fetchPartsAction,
+);
+export const updateParts = createAsyncThunk<void, void>(
+  'set/updateParts',
+  fetchPartsAction,
 );
 export const incrementPart = createAsyncThunk<boolean, Part>(
   'set/incrementPart',
@@ -197,8 +198,13 @@ const SetSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchParts.pending, (_state, _action) => {})
+      .addCase(fetchParts.pending, (state, _action) => {
+        state.statusParts = 'loading';
+      })
       .addCase(fetchParts.fulfilled, (state, _action) => {
+        state.statusParts = 'fulfilled';
+      })
+      .addCase(updateParts.fulfilled, (state, _action) => {
         state.statusParts = 'fulfilled';
       })
       .addCase(incrementPart.fulfilled, (_state, _action) => {

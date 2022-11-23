@@ -23,7 +23,7 @@ const PartsList = ({parts}: PartsListProps) => {
   const ZERO_PART_MESSAGE = ' Zéro pièce trouvé 🤦';
 
   useEffect(() => {
-    dispatch(fetchParts('loading'));
+    dispatch(fetchParts());
   }, [dispatch]);
   return (
     <View>
