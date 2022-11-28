@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, StyleSheet} from 'react-native';
 import PartsList from '../components/List/PartsList';
 
 import QuantityParts from '../components/Set/QuantityParts';
@@ -15,10 +15,19 @@ export default function ({navigation}: any) {
   const allParts = useReduxSelector(selectPartsByColorByCompleted);
 
   return (
-    <View>
-      <QuantityParts />
-      <PartsList parts={allParts} />
-      <Button onPress={() => goTo()} title={`Return to Collection`} />
-    </View>
+    <>
+      <View style={styles.container}>
+        <QuantityParts />
+      </View>
+      <View>
+        <PartsList parts={allParts} />
+        <Button onPress={() => goTo()} title={`Return to Collection`} />
+      </View>
+    </>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+});

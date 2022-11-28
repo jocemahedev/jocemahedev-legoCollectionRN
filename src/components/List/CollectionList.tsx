@@ -1,6 +1,6 @@
 import {Avatar, ListItem, Text} from '@react-native-material/core';
 import React, {useEffect} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useReduxDispatch, useReduxSelector} from '../../redux';
 import {
@@ -25,6 +25,7 @@ export default function CollectionList({pressSet}: CollectionListProps) {
   return (
     <View>
       <FlatList
+        contentContainerStyle={{paddingBottom: 70}}
         data={allSets}
         renderItem={({item}) => <Item set={item} onPress={pressSet} />}
         numColumns={1}
@@ -39,19 +40,16 @@ function Item({set, onPress}: ItemProps) {
     dispatch(deleteSet(deletedSet.id));
     dispatch(deleteParts(deletedSet.idParts));
   };
+  const quantityText = set.quantityCollectorParts + '/' + set.quantityParts;
   return (
     <View>
       <ListItem
         onPress={() => onPress(set)}
-        leadingMode="avatar"
-        title={set.name}
+        leadingMode="image"
+        title={set.idLego + ' ' + set.name}
         leading={<Avatar image={{uri: set.imageUrl}} />}
         trailing={<Button icon="trash" onPress={() => deleteSetHandler(set)} />}
-        secondaryText={
-          <Text>
-            {set.quantityCollectorParts}/{set.quantityParts}
-          </Text>
-        }
+        secondaryText={quantityText}
       />
     </View>
   );

@@ -1,8 +1,8 @@
 import {Stack} from '@react-native-material/core';
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import {Part} from '../../types/types';
-import {Button} from 'react-native-paper';
+import {Button, Text} from 'react-native-paper';
 import {
   completePart,
   decrementPart,
@@ -14,15 +14,16 @@ import {useReduxDispatch} from '../../redux';
 const Quantity = ({part}: QuantityProps) => {
   const dispatch = useReduxDispatch();
   return (
-    <Stack direction="row" spacing={1} style={styles.stackQuantity}>
+    <Stack direction="row" style={styles.stackQuantity}>
       <Button
         onPress={() => {
           dispatch(decrementPart(part));
           dispatch(updateParts());
         }}
         icon="minus"
+        compact={true}
       />
-      <Text style={styles.quantity}>
+      <Text variant="bodySmall" style={styles.quantity}>
         {part.quantityCollectorPart} sur {part.quantityPart}
       </Text>
       <Button
@@ -31,6 +32,7 @@ const Quantity = ({part}: QuantityProps) => {
           dispatch(updateParts());
         }}
         icon="plus"
+        compact={true}
       />
       <Button
         onPress={() => {
@@ -38,6 +40,7 @@ const Quantity = ({part}: QuantityProps) => {
           dispatch(updateParts());
         }}
         icon="check"
+        compact={true}
       />
     </Stack>
   );
@@ -49,7 +52,7 @@ type QuantityProps = {
 
 const styles = StyleSheet.create({
   stackQuantity: {
-    backgroundColor: '#fff9c4',
+    backgroundColor: '#1EECE7',
     borderRadius: 6,
   },
   quantity: {

@@ -1,3 +1,4 @@
+import {Text} from '@react-native-material/core';
 import React, {useEffect, useState} from 'react';
 import {Switch} from 'react-native-paper';
 import {useReduxDispatch} from '../../redux';
@@ -16,5 +17,10 @@ export default function OnlyMinifigFilter() {
     setMinifigFilter(filterMinifig);
   };
 
-  return <Switch value={minifigFilter} onValueChange={minifigFilterHandler} />;
+  return (
+    <>
+      <Text>{'Only Minifig'}</Text>
+      <Switch value={minifigFilter} onValueChange={minifigFilterHandler} />
+    </>
+  );
 }

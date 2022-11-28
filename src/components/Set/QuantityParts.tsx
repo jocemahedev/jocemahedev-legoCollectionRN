@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text} from 'react-native';
+import {Text} from 'react-native-paper';
 import {useReduxDispatch, useReduxSelector} from '../../redux';
 import {
   updateQuantityCurrentSet,
@@ -23,8 +23,12 @@ export default function QuantityParts() {
     0,
   );
   return (
-    <Text>
-      {quantityCollectorParts}/{quantityParts}
+    <Text variant="titleMedium">
+      {'You have ' +
+        quantityCollectorParts +
+        ' of ' +
+        quantityParts +
+        '  parts'}
     </Text>
   );
 }

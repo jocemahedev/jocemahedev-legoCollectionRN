@@ -1,7 +1,6 @@
 import {Surface, Text} from '@react-native-material/core';
-import {Image} from '@rneui/base';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 import {useReduxDispatch, useReduxSelector} from '../../redux';
 import {selectAddSetStatus, setAddSetStatus} from '../../redux/collection';
 import {ActivityIndicator, Snackbar} from 'react-native-paper';
@@ -25,6 +24,7 @@ const SetSearchResult = ({setIdLego}: SetSearchResultProps) => {
       {!error && data && (
         <>
           <Snackbar
+            style={styles.snackbar}
             visible={addSetStatus === 'fulfilled'}
             onDismiss={() => {}}
             duration={2000}
@@ -36,9 +36,9 @@ const SetSearchResult = ({setIdLego}: SetSearchResultProps) => {
             }}>
             <Text>{setIdLego} was added to collection.</Text>
           </Snackbar>
-          <Text>{data?.name}</Text>
-          <Text>{data?.set_num}</Text>
-          <Text>{data?.num_parts} parts</Text>
+          <Text variant="h5">{data?.set_num}</Text>
+          <Text variant="h6">{data?.name}</Text>
+          <Text variant="body1">{data?.num_parts} parts</Text>
           <Surface elevation={2} category="medium">
             <Image source={{uri: data?.set_img_url}} style={styles.stretch} />
           </Surface>
@@ -58,12 +58,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'azure',
     alignItems: 'center',
-    //justifyContent: 'center',
   },
   stretch: {
-    width: 300,
-    height: 300,
+    width: 350,
+    height: 350,
+    margin: 10,
     resizeMode: 'contain',
+  },
+  snackbar: {
+    backgroundColor: 'azure',
+    color: 'white',
   },
 });
 

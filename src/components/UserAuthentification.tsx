@@ -14,6 +14,7 @@ import {useReduxDispatch} from '../redux';
 import {setCurrentCollection} from '../redux/collection';
 import {setCurrentCollector} from '../redux/collector';
 import {Collector} from '../types/types';
+import {StyleSheet, View} from 'react-native';
 
 export type currentAuthentification = 'create' | 'login' | 'reset';
 export type userAuthentificationProps = {
@@ -42,7 +43,7 @@ const UserAuthentification = ({
   };
   const loginHandler = () => {
     setError(undefined);
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, 'Testtoto6@gmail.com', 'testtoto6')
       .then(userCredential => {
         // Signed in
         const user = userCredential.user;
@@ -90,75 +91,105 @@ const UserAuthentification = ({
       });
   };
   return (
-    <Stack spacing={4}>
-      {error && <Text>{error}</Text>}
-      <TextInput
-        placeholder="email"
-        textContentType={'emailAddress'}
-        onChangeText={text => setEmail(text)}
-        value={email}
-        clearButtonMode={'while-editing'}
-        keyboardType={'email-address'}
-      />
-      {currentAuthentification !== 'reset' && (
-        <TextInput
-          textContentType={'password'}
-          onChangeText={text => setPassword(text)}
-          value={password}
-          clearButtonMode={'while-editing'}
-          returnKeyLabel={'done'}
-          returnKeyType={'done'}
-          placeholder={'Password'}
-          secureTextEntry={true}
-        />
-      )}
-      {currentAuthentification === 'create' && (
-        <TextInput
-          textContentType={'name'}
-          onChangeText={text => setName(text)}
-          value={name}
-          clearButtonMode={'while-editing'}
-          returnKeyLabel={'done'}
-          returnKeyType={'done'}
-          placeholder={'Enter your name'}
-        />
-      )}
+    <View style={styles.container}>
+      <Stack spacing={8} style={styles.stack}>
+        {error && <Text>{error}</Text>}
 
-      {currentAuthentification === 'login' && (
-        <>
-          <Button title="login" onPress={() => loginHandler()} />
-          <Text onPress={() => setCurrentAuthentification('create')}>
-            {'Create new account'}
-          </Text>
-          <Text onPress={() => setCurrentAuthentification('reset')}>
-            {'Reset password'}
-          </Text>
-        </>
-      )}
-      {currentAuthentification === 'create' && (
-        <>
-          <Button
-            onPress={() => createAccountHandler()}
-            title="Create account"
+        <TextInput
+          placeholder="email"
+          textContentType={'emailAddress'}
+          onChangeText={text => setEmail(text)}
+          value={email}
+          clearButtonMode={'while-editing'}
+          keyboardType={'email-address'}
+        />
+
+        {currentAuthentification !== 'reset' && (
+          <TextInput
+            textContentType={'password'}
+            onChangeText={text => setPassword(text)}
+            value={password}
+            clearButtonMode={'while-editing'}
+            returnKeyLabel={'done'}
+            returnKeyType={'done'}
+            placeholder={'Password'}
+            secureTextEntry={true}
           />
-          <Text onPress={() => setCurrentAuthentification('login')}>
-            {'Return to login'}
-          </Text>
-        </>
-      )}
-      {currentAuthentification === 'reset' && (
-        <>
-          <Button
-            title="Reset Password"
-            onPress={() => resetPasswordHandler()}
+        )}
+        {currentAuthentification === 'create' && (
+          <TextInput
+            textContentType={'name'}
+            onChangeText={text => setName(text)}
+            value={name}
+            clearButtonMode={'while-editing'}
+            returnKeyLabel={'done'}
+            returnKeyType={'done'}
+            placeholder={'Enter your name'}
           />
-          <Text onPress={() => setCurrentAuthentification('login')}>
-            {'Return to login'}
-          </Text>
-        </>
-      )}
-    </Stack>
+        )}
+
+        {currentAuthentification === 'login' && (
+          <>
+            <Button title="login" onPress={() => loginHandler()} />
+            <Button
+              style={styles.marginButtonText}
+              variant="text"
+              onPress={() => setCurrentAuthentification('create')}
+              title={'Create new account'}
+            />
+
+            <Button
+              style={styles.marginButtonText}
+              variant="text"
+              onPress={() => setCurrentAuthentification('reset')}
+              title={'Reset password'}
+            />
+          </>
+        )}
+        {currentAuthentification === 'create' && (
+          <>
+            <Button
+              onPress={() => createAccountHandler()}
+              title="Create account"
+            />
+            <Button
+              style={styles.marginButtonText}
+              variant="text"
+              onPress={() => setCurrentAuthentification('login')}
+              title={'Return to login'}
+            />
+          </>
+        )}
+        {currentAuthentification === 'reset' && (
+          <>
+            <Button
+              title="Reset Password"
+              onPress={() => resetPasswordHandler()}
+            />
+            <Button
+              style={styles.marginButtonText}
+              variant="text"
+              onPress={() => setCurrentAuthentification('login')}
+              title={'Return to login'}
+            />
+          </>
+        )}
+      </Stack>
+    </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    margin: 30,
+    marginTop: '50%',
+  },
+  stack: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+  marginButtonText: {
+    marginTop: 20,
+  },
+});
 export default UserAuthentification;

@@ -1,9 +1,9 @@
-import {Button, Text} from '@react-native-material/core';
-import {signOut} from 'firebase/auth';
+import {Button} from '@react-native-material/core';
 import React from 'react';
 
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import CollectionList from '../components/List/CollectionList';
+import CountSets from '../components/Set/CountSets';
 import {useReduxDispatch} from '../redux';
 import {setCurrentIndexSet} from '../redux/collection';
 
@@ -17,12 +17,22 @@ export default function ({navigation}: CollectionListScreenProps) {
   };
 
   return (
-    <View>
-      <Button
-        title={'Search new set 👻'}
-        onPress={() => navigation.navigate('Set')}
-      />
+    <>
+      <View style={styles.container}>
+        <CountSets />
+        <Button
+          title={'Search new set 👻'}
+          onPress={() => navigation.navigate('Set')}
+        />
+      </View>
       <CollectionList pressSet={onPressSet} />
-    </View>
+    </>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
+  },
+});

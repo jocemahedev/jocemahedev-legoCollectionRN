@@ -4,6 +4,7 @@ import {Color} from '../../types/types';
 import {Chip, Badge} from '@react-native-material/core';
 import {useReduxDispatch} from '../../redux';
 import {setCurrentColors} from '../../redux/set';
+import {styles} from './Filter.styles';
 
 export default function ColorsFilter({colors}: ColorsFilterProps) {
   const dispatch = useReduxDispatch();
@@ -34,7 +35,7 @@ export default function ColorsFilter({colors}: ColorsFilterProps) {
   };
 
   return (
-    <ScrollView horizontal>
+    <ScrollView horizontal style={styles.filter}>
       {colors.map(color => (
         <TouchableOpacity key={color.id}>
           <Chip

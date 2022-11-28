@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView} from 'react-native';
 import {useReduxDispatch} from '../../redux';
 import {setCurrentCompleteFilter} from '../../redux/set';
 import {SegmentedButtons} from 'react-native-paper';
+import {styles} from './Filter.styles';
 
 export default function CompletePartsFilter() {
   const dispatch = useReduxDispatch();
@@ -31,23 +31,22 @@ export default function CompletePartsFilter() {
     }
   };
   return (
-    <ScrollView horizontal>
-      <SegmentedButtons
-        value={value}
-        onValueChange={segmentedButtonHandler}
-        buttons={[
-          {
-            value: 'complete',
-            label: 'Complete parts',
-            onPress: () => completeFilterHandler('complete'),
-          },
-          {
-            value: 'incomplete',
-            label: 'Incomplete parts',
-            onPress: () => completeFilterHandler('incomplete'),
-          },
-        ]}
-      />
-    </ScrollView>
+    <SegmentedButtons
+      style={styles.filter}
+      value={value}
+      onValueChange={segmentedButtonHandler}
+      buttons={[
+        {
+          value: 'complete',
+          label: 'Complete parts',
+          onPress: () => completeFilterHandler('complete'),
+        },
+        {
+          value: 'incomplete',
+          label: 'Incomplete parts',
+          onPress: () => completeFilterHandler('incomplete'),
+        },
+      ]}
+    />
   );
 }
